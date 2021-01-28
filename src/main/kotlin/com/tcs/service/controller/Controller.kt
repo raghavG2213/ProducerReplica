@@ -3,18 +3,27 @@ package com.tcs.service.controller
 import com.tcs.service.model.Dummy
 import com.tcs.service.model.ServiceResponse
 import com.tcs.service.service.Producer
+//import com.tcs.service.service.Producer
+import javafx.application.Application
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-class Controller(private val producer: Producer ) {
+class Controller
+(private val producer: Producer)
+{
 
 
-    @RequestMapping("/post",method = [RequestMethod.POST])
+    @RequestMapping("/post", method = [RequestMethod.POST], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun create(@RequestBody dummy: Dummy): ResponseEntity<ServiceResponse> {
 
+        println("Dummy Data")
+        println(dummy.shipmentId)
+
         producer.create(dummy)
+
         return ResponseEntity.ok(ServiceResponse("200",
                 "SUCCESS", "Data Posted"))
 
